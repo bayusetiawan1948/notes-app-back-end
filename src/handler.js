@@ -31,6 +31,7 @@ const addNoteHandler = (request, h) => {
         noteId: id,
       },
     });
+    response.code(201);
     return response;
   }
 
@@ -38,7 +39,7 @@ const addNoteHandler = (request, h) => {
     status: 'fail',
     message: 'Catatan gagal ditambahkan',
   });
-
+  response.code(404);
   return response;
 };
 
@@ -128,7 +129,15 @@ const deleteNoteHandler = (request, h) => {
     response.code(200);
     return response;
   }
+
+  const response = h.response({
+    status: 'fail',
+    message: 'Catatan gagal dihapus. Id tidak ditemukan',
+  });
+  response.code(404);
+  return response;
 };
+
 module.exports = {
   addNoteHandler,
   getAllNoteHandler,
